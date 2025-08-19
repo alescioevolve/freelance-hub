@@ -1,0 +1,44 @@
+[
+  {
+    "id": "profile_1",
+    "userId": "user_1",
+    "firstName": "Admin",
+    "lastName": "User",
+    "bio": "Platform administrator",
+    "skills": [],
+    "rating": 5.0,
+    "totalEarnings": 0,
+    "completedJobs": 0,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "profile_2",
+    "userId": "user_2",
+    "firstName": "John",
+    "lastName": "Client",
+    "bio": "Looking for talented freelancers for my projects",
+    "skills": [],
+    "rating": 4.8,
+    "totalEarnings": 0,
+    "completedJobs": 5,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "profile_3",
+    "userId": "user_3",
+    "firstName": "Sarah",
+    "lastName": "Developer",
+    "bio": "Full-stack developer with 5+ years experience",
+    "skills": ["React", "Node.js", "TypeScript", "Next.js"],
+    "hourlyRate": 75,
+    "location": "San Francisco, CA",
+    "timezone": "PST",
+    "rating": 4.9,
+    "totalEarnings": 25000,
+    "completedJobs": 12,
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "updatedAt": "2024-01-01T00:00:00.000Z"
+  }
+]

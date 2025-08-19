@@ -1,0 +1,31 @@
+[
+  {
+    "id": "job_1",
+    "clientId": "user_2",
+    "title": "Build a Modern E-commerce Website",
+    "description": "I need a full-stack developer to build a modern e-commerce website using Next.js and Stripe integration. The site should have user authentication, product catalog, shopping cart, and payment processing.",
+    "category": "Web Development",
+    "budget": 5000,
+    "budgetType": "fixed",
+    "skills": ["Next.js", "React", "TypeScript", "Stripe", "Tailwind CSS"],
+    "status": "active",
+    "deadline": "2024-03-15T00:00:00.000Z",
+    "proposalCount": 3,
+    "createdAt": "2024-01-15T00:00:00.000Z",
+    "updatedAt": "2024-01-15T00:00:00.000Z"
+  },
+  {
+    "id": "job_2",
+    "clientId": "user_2",
+    "title": "Mobile App UI/UX Design",
+    "description": "Looking for a talented UI/UX designer to create mockups and prototypes for a mobile fitness app. Need modern, clean design with excellent user experience.",
+    "category": "Design",
+    "budget": 75,
+    "budgetType": "hourly",
+    "skills": ["Figma", "UI/UX Design", "Mobile Design", "Prototyping"],
+    "status": "active",
+    "proposalCount": 7,
+    "createdAt": "2024-01-20T00:00:00.000Z",
+    "updatedAt": "2024-01-20T00:00:00.000Z"
+  }
+]

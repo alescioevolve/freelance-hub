@@ -1,0 +1,13 @@
+[
+  {
+    "id": "proposal_1",
+    "jobId": "job_1",
+    "freelancerId": "user_3",
+    "coverLetter": "Hi! I'm a full-stack developer with extensive experience in Next.js and e-commerce development. I've built similar platforms before and can deliver a high-quality solution within your timeline.",
+    "proposedBudget": 4800,
+    "deliveryTime": 30,
+    "status": "pending",
+    "createdAt": "2024-01-16T00:00:00.000Z",
+    "updatedAt": "2024-01-16T00:00:00.000Z"
+  }
+]

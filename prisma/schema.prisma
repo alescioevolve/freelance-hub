@@ -1,0 +1,208 @@
+// Prisma schema for production database (not used in mock version)
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  role      UserRole @default(CLIENT)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  profile   Profile?
+  jobs      Job[]
+  proposals Proposal[]
+  contracts Contract[]
+  messages  Message[]
+  reviews   Review[]
+  disputes  Dispute[]
+
+  @@map("users")
+}
+
+model Profile {
+  id            String  @id @default(cuid())
+  userId        String  @unique
+  firstName     String
+  lastName      String
+  avatar        String?
+  bio           String?
+  skills        String[]
+  hourlyRate    Float?
+  location      String?
+  timezone      String?
+  rating        Float   @default(0)
+  totalEarnings Float   @default(0)
+  completedJobs Int     @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("profiles")
+}
+
+model Job {
+  id            String     @id @default(cuid())
+  clientId      String
+  title         String
+  description   String
+  category      String
+  budget        Float
+  budgetType    BudgetType
+  skills        String[]
+  status        JobStatus  @default(DRAFT)
+  deadline      DateTime?
+  proposalCount Int        @default(0)
+  createdAt     DateTime   @default(now())
+  updatedAt     DateTime   @updatedAt
+
+  client    User       @relation(fields: [clientId], references: [id])
+  proposals Proposal[]
+  contracts Contract[]
+
+  @@map("jobs")
+}
+
+model Proposal {
+  id             String         @id @default(cuid())
+  jobId          String
+  freelancerId   String
+  coverLetter    String
+  proposedBudget Float
+  deliveryTime   Int
+  status         ProposalStatus @default(PENDING)
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+
+  job        Job        @relation(fields: [jobId], references: [id])
+  freelancer User       @relation(fields: [freelancerId], references: [id])
+  contracts  Contract[]
+
+  @@unique([jobId, freelancerId])
+  @@map("proposals")
+}
+
+model Contract {
+  id           String         @id @default(cuid())
+  jobId        String
+  proposalId   String
+  clientId     String
+  freelancerId String
+  budget       Float
+  status       ContractStatus @default(ACTIVE)
+  startDate    DateTime       @default(now())
+  endDate      DateTime?
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+
+  job        Job      @relation(fields: [jobId], references: [id])
+  proposal   Proposal @relation(fields: [proposalId], references: [id])
+  client     User     @relation(fields: [clientId], references: [id])
+  messages   Message[]
+  reviews    Review[]
+  disputes   Dispute[]
+
+  @@map("contracts")
+}
+
+model Message {
+  id         String      @id @default(cuid())
+  threadId   String
+  senderId   String
+  content    String
+  type       MessageType @default(TEXT)
+  createdAt  DateTime    @default(now())
+
+  sender   User      @relation(fields: [senderId], references: [id])
+  contract Contract? @relation(fields: [threadId], references: [id])
+
+  @@map("messages")
+}
+
+model Review {
+  id         String   @id @default(cuid())
+  contractId String
+  reviewerId String
+  revieweeId String
+  rating     Int
+  comment    String
+  createdAt  DateTime @default(now())
+
+  contract Contract @relation(fields: [contractId], references: [id])
+  reviewer User     @relation(fields: [reviewerId], references: [id])
+
+  @@unique([contractId, reviewerId])
+  @@map("reviews")
+}
+
+model Dispute {
+  id          String        @id @default(cuid())
+  contractId  String
+  raisedBy    String
+  reason      String
+  description String
+  status      DisputeStatus @default(OPEN)
+  resolution  String?
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  contract Contract @relation(fields: [contractId], references: [id])
+  user     User     @relation(fields: [raisedBy], references: [id])
+
+  @@map("disputes")
+}
+
+enum UserRole {
+  CLIENT
+  FREELANCER
+  ADMIN
+}
+
+enum JobStatus {
+  DRAFT
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+enum BudgetType {
+  FIXED
+  HOURLY
+}
+
+enum ProposalStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  WITHDRAWN
+}
+
+enum ContractStatus {
+  ACTIVE
+  COMPLETED
+  CANCELLED
+  DISPUTED
+}
+
+enum DisputeStatus {
+  OPEN
+  IN_REVIEW
+  RESOLVED
+  CLOSED
+}
+
+enum MessageType {
+  TEXT
+  FILE
+  SYSTEM
+}
